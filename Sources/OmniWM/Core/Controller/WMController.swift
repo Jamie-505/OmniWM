@@ -154,6 +154,7 @@ final class WMController {
     let appVolumeMixer: AppVolumeMixer
     @ObservationIgnored
     let mediaController = MediaController()
+    let sonosController = SonosController()
     @ObservationIgnored
     let calendarController = CalendarController()
     @ObservationIgnored

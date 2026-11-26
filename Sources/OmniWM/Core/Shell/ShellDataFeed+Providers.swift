@@ -88,6 +88,7 @@ extension ShellDataFeed {
         listAudioApps(!paused && demands(.audioApps))
         listenToMedia(!paused && (demands(.media) || demands(.lyrics)))
         showLyrics(!paused && demands(.lyrics))
+        listenToSonos(!paused && demands(.sonos))
         listenToCalendar(!paused && demands(.calendar))
         listenToReminders(!paused && demands(.reminders))
         listenToNotifications(started && !paused && demands(.notifications))
@@ -162,6 +163,22 @@ extension ShellDataFeed {
             publish()
         }
         data.media = media.media
+    }
+
+    func listenToSonos(_ listening: Bool) {
+        guard let sonos else { return }
+        sonos.setListening(listening)
+        guard listening else {
+            sonos.onChange = nil
+            data.sonos = nil
+            return
+        }
+        sonos.onChange = { [weak self] value in
+            guard let self, data.sonos != value else { return }
+            data.sonos = value
+            publish()
+        }
+        data.sonos = sonos.sonos
     }
 
     func showLyrics(_ shown: Bool) {

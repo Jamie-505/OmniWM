@@ -34,8 +34,19 @@
 	<string>OmniWM shows your upcoming events in shell widgets.</string>
 	<key>NSRemindersFullAccessUsageDescription</key>
 	<string>OmniWM shows your reminders in shell widgets and completes reminders you choose.</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_sonos._tcp</string>
+	</array>
 	<key>NSHighResolutionCapable</key>
 	<true/>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>OmniWM shows what your Sonos speakers are playing in shell widgets and controls their playback.</string>
 	<key>NSLocationUsageDescription</key>
 	<string>OmniWM shows the name of your Wi-Fi network in shell widgets.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

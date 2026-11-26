@@ -58,6 +58,7 @@ enum ShellDataKey: String, CaseIterable, Sendable {
     case commandPalette
     case nightShift
     case wifiNetworks
+    case sonos
 
     private static let order = allCases
     static let table = order.map(\.rawValue).joined(separator: "\n")
@@ -154,6 +155,7 @@ struct ShellWidgetData: Equatable, Sendable {
     var outputs: [ShellAudioOutput]?
     var audioApps: ShellAudioApps?
     var media: ShellMedia?
+    var sonos: ShellSonos?
     var calendar: ShellCalendar?
     var reminders: ShellReminders?
     var notifications: ShellNotificationsData?
@@ -200,6 +202,7 @@ extension ShellWidgetData {
             | Self.changed(.outputs, when: outputs != previous.outputs)
             | Self.changed(.audioApps, when: audioApps != previous.audioApps)
             | Self.changed(.media, when: media != previous.media)
+            | Self.changed(.sonos, when: sonos != previous.sonos)
             | Self.changed(.calendar, when: calendar != previous.calendar)
             | Self.changed(.reminders, when: reminders != previous.reminders)
             | Self.changed(.notifications, when: notifications != previous.notifications)

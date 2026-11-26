@@ -99,6 +99,7 @@ enum ShellAction: Equatable, Sendable {
     case nightShift(ShellNightShiftCommand)
     case awake(ShellAwakeCommand)
     case media(ShellMediaCommand)
+    case sonos(ShellSonosCommand)
     case calendar(ShellCalendarCommand)
     case reminders(ShellRemindersCommand)
     case notifications(ShellNotificationsCommand)
@@ -117,6 +118,7 @@ enum ShellAction: Equatable, Sendable {
         "brightness": { ShellBrightnessCommand(words: $0).map(ShellAction.brightness) },
         "night-shift": { ShellNightShiftCommand(words: $0).map(ShellAction.nightShift) },
         "media": { ShellMediaCommand(words: $0).map(ShellAction.media) },
+        "sonos": { ShellSonosCommand(words: $0).map(ShellAction.sonos) },
         "calendar": { ShellCalendarCommand(words: $0).map(ShellAction.calendar) },
         "reminders": { ShellRemindersCommand(words: $0).map(ShellAction.reminders) },
         "notifications": { ShellNotificationsCommand(words: $0).map(ShellAction.notifications) },

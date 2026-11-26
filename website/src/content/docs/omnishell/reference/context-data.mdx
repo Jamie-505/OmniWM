@@ -90,6 +90,7 @@ ui.text{ text = ctx.format.bytes(ctx.data.system and ctx.data.system.memory.used
 | `privacy` | Whether any app is using a microphone or a camera |
 | `wifi` | Wi-Fi power, signal, band, channel and security, and the network name once Location access is allowed |
 | `wifiNetworks` | **Unreleased:** available when building from `main`. Known Networks (saved and in range, in macOS auto-join order) and Other Networks (in range, by signal), up to 12 each, plus scan, join and failure state. Each network's `opensSettings` is true when clicking it hands off to Wi-Fi Settings. Reading it starts a scan every 10 seconds, so read it only in a popout; it stays empty until Location access is allowed |
+| `sonos` | **Unreleased:** available when building from `main`. While the Sonos app is open, `groups` lists each Sonos room group on the local network with its `id`, `room`, `rooms`, `members` (each room in the group, with its own `id` and, in a group of several rooms, its own `volume` and `muted`), track (`title`, `artist`, `album`, `artwork`), `playing`, `duration`, `elapsed`, `sampledAt`, `volume` (0–100) and `muted`; `nil` while the app is closed. macOS asks once for local-network access |
 | `connection` | How the Mac reaches the network (`wifi`, `ethernet`, `cellular`, `other` or `none`) and the interface name; a VPN reports the Wi-Fi or Ethernet link beneath it |
 | `bluetooth` | Bluetooth power and paired devices with their battery levels, once Bluetooth access is allowed |
 | `volume`, `muted`, `outputs` | Output volume and the audio outputs, each with a device `kind` such as `airpodspro`, `headphones` or `display` |
@@ -208,6 +209,7 @@ Use `reminders authorize` to request access, `reminders settings` to open Remind
 | `volume app <bundle> set <0-100>`, `volume app <bundle> mute`, `volume app <bundle> reset` | One app's volume |
 | `volume permission` | Open the System Audio Recording privacy settings |
 | `media play`, `media pause`, `media toggle`, `media next`, `media previous`, `media seek <seconds>`, `media shuffle`, `media repeat`, `media open` | Playback; shuffle turns shuffle on or off and repeat steps through off, one and all, as `media.shuffle` and `media.repeatMode` show; when no widget reads `media`, play, pause and track changes send the media keys |
+| `sonos play <id>`, `sonos pause <id>`, `sonos toggle <id>`, `sonos next <id>`, `sonos previous <id>`, `sonos seek <id> <seconds>`, `sonos volume <id> <0-100>`, `sonos room-volume <member id> <0-100>`, `sonos room-mute <member id>`, `sonos mute <id>`, `sonos join <member id> <id>`, `sonos leave <member id>`, `sonos open` | **Unreleased:** available when building from `main`. Control the Sonos group whose `id` comes from `ctx.data.sonos.groups`; `join` adds a room to a group and `leave` splits it off; `open` brings the Sonos app forward |
 | `session lock`, `session sleep`, `session logout`, `session restart`, `session shutdown` | Lock the screen, sleep, or ask macOS to log out, restart or shut down; macOS shows its usual confirmation for the last three, and asks once for permission to control loginwindow |
 | `appearance toggle`, `appearance settings` | Switch macOS between light and dark appearance, or open the Appearance settings, where Auto is set |
 | `calendar authorize`, `calendar settings`, `calendar open [event]`, `calendar month next\|previous\|today`, `calendar day <yyyy-mm-dd>` | Calendar; `settings` opens the Calendars privacy settings |
@@ -302,6 +304,8 @@ Optional artwork is an image reference. Media elapsed time is sampled with `samp
 <LuauDeclaration name="AudioApps" />
 
 <LuauDeclaration name="Media" />
+
+<LuauDeclaration name="SonosGroup" />
 
 ## Calendar and reminders snapshots
 

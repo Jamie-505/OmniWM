@@ -320,6 +320,23 @@ export type Media = {
     repeatMode: ("off" | "one" | "all")?,
 }
 
+export type SonosGroup = {
+    id: string,
+    room: string,
+    rooms: { string },
+    members: { { id: string, room: string, volume: number?, muted: boolean? } },
+    title: string,
+    artist: string,
+    album: string,
+    playing: boolean,
+    duration: number?,
+    elapsed: number?,
+    sampledAt: number,
+    artwork: string?,
+    volume: number?,
+    muted: boolean?,
+}
+
 export type CalendarEvent = {
     id: string,
     title: string,
@@ -702,6 +719,7 @@ export type Data = {
     commandPalette: CommandPalette?,
     nightShift: NightShift?,
     wifiNetworks: WiFiNetworks?,
+    sonos: { groups: { SonosGroup } }?,
 }
 
 export type Format = {

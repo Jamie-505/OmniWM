@@ -358,6 +358,7 @@ extension ShellWidgetHost {
                 permissions: permissions,
                 appVolumes: resources.appVolumes,
                 media: resources.media,
+                sonos: resources.sonos,
                 calendar: resources.calendar,
                 devices: resources.devices,
                 notifications: resources.notifications,
