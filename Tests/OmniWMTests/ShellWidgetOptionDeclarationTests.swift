@@ -13,6 +13,7 @@ final class ShellWidgetOptionDeclarationTests: XCTestCase {
         "lib/battery.luau": ["battery-details"],
         "lib/calendar.luau": ["calendar"],
         "lib/look.luau": ["workspaces"],
+        "lib/media.luau": ["media"],
         "lib/stats.luau": ["stats"],
         "lib/weather.luau": ["weather"],
         "lib/world-clock.luau": ["world-clock"],
