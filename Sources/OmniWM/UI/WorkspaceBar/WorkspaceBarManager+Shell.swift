@@ -208,6 +208,7 @@ extension WorkspaceBarManager {
             motion: motionPolicy,
             appVolumes: controller?.appVolumeMixer,
             media: controller?.mediaController,
+            sonos: controller?.sonosController,
             calendar: controller?.calendarController,
             notifications: ShellNotificationsController(menuBarAccess: { [weak self] active in
                 self?.menuBarHold?.setMenuAccess(active, for: .notifications) ?? false

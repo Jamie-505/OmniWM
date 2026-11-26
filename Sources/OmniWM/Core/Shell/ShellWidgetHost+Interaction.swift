@@ -128,6 +128,7 @@ extension ShellWidgetHost {
         case let .nightShift(command): resources.devices.nightShift.perform(command)
         case let .awake(command): resources.keepAwake(command)
         case let .media(command): resources.media?.perform(command)
+        case let .sonos(command): resources.sonos?.perform(command)
         case let .calendar(command): resources.calendar?.perform(command)
         case let .reminders(command): resources.calendar?.perform(command)
         case let .notifications(command): perform(command)

@@ -13,6 +13,7 @@ final class ShellResources {
     let motion: MotionPolicy
     let appVolumes: AppVolumeMixer?
     let media: MediaController?
+    let sonos: SonosController?
     let calendar: CalendarController?
     let devices = ShellDevices()
     let notifications: ShellNotificationsController
@@ -33,6 +34,7 @@ final class ShellResources {
         motion: MotionPolicy,
         appVolumes: AppVolumeMixer? = nil,
         media: MediaController? = nil,
+        sonos: SonosController? = nil,
         calendar: CalendarController? = nil,
         notifications: ShellNotificationsController? = nil,
         windowIcon: @escaping @MainActor (String) -> NSImage? = { _ in nil },
@@ -43,6 +45,7 @@ final class ShellResources {
         self.motion = motion
         self.appVolumes = appVolumes
         self.media = media
+        self.sonos = sonos
         self.calendar = calendar
         self.notifications = notifications ?? ShellNotificationsController()
         self.windowIcon = windowIcon
@@ -56,7 +59,7 @@ final class ShellResources {
     }
 
     func bitmap(_ id: String) -> CGImage? {
-        bitmaps[id] ?? media?.bitmap(id) ?? devices.user.bitmap(id)
+        bitmaps[id] ?? media?.bitmap(id) ?? sonos?.bitmap(id) ?? devices.user.bitmap(id)
     }
 
     func icon(_ source: IconSource, _ reference: String) -> NSImage? {

@@ -124,6 +124,9 @@ extension ShellWidgetPackage {
                 media.write(into: &writer)
             }
         }
+        if changed & ShellDataKey.sonos.bit != 0 {
+            setValue(instance, .sonos) { writer in next.sonos.map { $0.write(into: &writer) } ?? writer.null() }
+        }
         if changed & ShellDataKey.tempo.bit != 0 {
             setValue(instance, .tempo) { writer in next.spectrum?.bpm.map { writer.number($0) } ?? writer.null() }
         }

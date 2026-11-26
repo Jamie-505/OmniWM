@@ -34,6 +34,40 @@
         }
       }
     },
+    "Rooms" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rooms"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "房间"
+          }
+        }
+      }
+    },
+    "Show artist in bar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show artist in bar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在栏中显示艺人"
+          }
+        }
+      }
+    },
     "Turned off in Settings" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -80,6 +80,7 @@ final class ShellDataFeed {
 
     let appVolumes: AppVolumeMixer?
     let media: MediaController?
+    let sonos: SonosController?
     let lyrics: LyricsController
     let calendar: CalendarController?
     let devices: ShellDevices?
@@ -94,6 +95,7 @@ final class ShellDataFeed {
         loadWeather: (@Sendable (ShellWeatherLocation) async throws -> ShellWeatherReading)? = nil,
         appVolumes: AppVolumeMixer? = nil,
         media: MediaController? = nil,
+        sonos: SonosController? = nil,
         lyrics: LyricsController = LyricsController(),
         calendar: CalendarController? = nil,
         devices: ShellDevices? = nil,
@@ -110,6 +112,7 @@ final class ShellDataFeed {
         self.loadWeather = loadWeather ?? { try await ShellWeatherClient.forecast($0, permissions: permissions) }
         self.appVolumes = appVolumes
         self.media = media
+        self.sonos = sonos
         self.lyrics = lyrics
         lyrics.setPermissions(permissions)
         self.calendar = calendar
@@ -190,6 +193,7 @@ final class ShellDataFeed {
         listenToMicrophone(false)
         listAudioApps(false)
         listenToMedia(false)
+        listenToSonos(false)
         showLyrics(false)
         listenToCalendar(false)
         listenToReminders(false)
