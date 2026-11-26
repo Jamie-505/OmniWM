@@ -542,7 +542,7 @@ final class MenuBarAutohideHoldTests: XCTestCase {
         XCTAssertTrue(WorkspaceBarManager.coversAppMenus(settings.resolved(for: notched)))
     }
 
-    func testAFullWidthBarOverTheMenuBarStaysAboveNativeMenus() {
+    func testABarOverTheMenuBarKeepsItsConfiguredWindowLevel() {
         let monitor = Monitor(
             id: .init(displayId: 7),
             displayId: 7,
@@ -571,7 +571,7 @@ final class MenuBarAutohideHoldTests: XCTestCase {
         XCTAssertGreaterThan(island.panel.level.rawValue, NSWindow.Level.statusBar.rawValue)
         settings.windowLevel = .floating
         island.applySettings(resolved: settings.resolved(for: monitor), monitor: monitor)
-        XCTAssertEqual(island.panel.level.rawValue, NSWindow.Level.statusBar.rawValue + 1)
+        XCTAssertEqual(island.panel.level, .floating)
         settings.windowLevel = .popup
         island.applySettings(resolved: settings.resolved(for: monitor), monitor: monitor)
         XCTAssertEqual(island.panel.level, .popUpMenu)
@@ -588,7 +588,7 @@ final class MenuBarAutohideHoldTests: XCTestCase {
         settings.windowLevel = .floating
         settings.fullWidth = false
         island.applySettings(resolved: settings.resolved(for: monitor), monitor: monitor)
-        XCTAssertEqual(island.panel.level.rawValue, NSWindow.Level.statusBar.rawValue + 1)
+        XCTAssertEqual(island.panel.level, .floating)
 
         settings.fullWidth = true
         for position in [WorkspaceBarPosition.belowMenuBar, .bottom, .left, .right] {
@@ -611,6 +611,6 @@ final class MenuBarAutohideHoldTests: XCTestCase {
         island.applySettings(resolved: settings.resolved(for: notched), monitor: notched)
         XCTAssertEqual(island.panel.level, .floating)
         island.applySettings(resolved: settings.resolved(for: monitor), monitor: monitor)
-        XCTAssertEqual(island.panel.level.rawValue, NSWindow.Level.statusBar.rawValue + 1)
+        XCTAssertEqual(island.panel.level, .floating)
     }
 }
