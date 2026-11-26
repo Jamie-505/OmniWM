@@ -241,7 +241,7 @@ final class WorkspaceBarManagerTests: XCTestCase {
         let panel = instance.primary.panel
         XCTAssertEqual(panel.frame, original)
         XCTAssertEqual(original.maxY, monitor.frame.maxY)
-        XCTAssertGreaterThan(panel.level.rawValue, NSWindow.Level.statusBar.rawValue)
+        XCTAssertEqual(panel.level, .normal)
 
         try await manager.shellConfiguration.set(WorkspaceBarPosition.belowMenuBar, key: "position")
         manager.apply([bar])
@@ -258,7 +258,7 @@ final class WorkspaceBarManagerTests: XCTestCase {
         XCTAssertTrue(instance.primary.panel === panel)
         XCTAssertEqual(instance.primary.lastAppliedFrame, original)
         XCTAssertEqual(panel.frame, original)
-        XCTAssertGreaterThan(panel.level.rawValue, NSWindow.Level.statusBar.rawValue)
+        XCTAssertEqual(panel.level, .normal)
     }
 
     func testSavingBelowWithVisibleMenusRepairsActualPanelDriftInBothWidthModes() async throws {
