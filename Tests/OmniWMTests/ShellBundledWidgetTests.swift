@@ -760,6 +760,61 @@ final class ShellBundledWidgetTests: XCTestCase {
         }
     }
 
+    func testMediaBarShowsOnlyTheElementsItsSettingsEnable() throws {
+        let data = try fullData()
+        let settings = { (flags: [(String, Bool)]) in
+            self.value { writer in
+                writer.map(flags.count)
+                for (key, flag) in flags {
+                    writer.key(key)
+                    writer.bool(flag)
+                }
+            }
+        }
+        let cases: [([(String, Bool)], present: [String], absent: [String])] = [
+            ([], ["Song"], ["0:50 / 3:20"]),
+            ([("artist", true), ("album", true), ("time", true)], ["0:50 / 3:20"], ["Song"]),
+            ([("title", false), ("time", true)], ["0:50 / 3:20"], ["Song"])
+        ]
+        for style in ["default", "celestial", "wayline", "nocturne"] {
+            for (flags, present, absent) in cases {
+                try renderStyle(
+                    style, widget: "media", data: data + [("settings", settings(flags))],
+                    inspect: { view, nodes, text in
+                        guard view == OMNI_VIEW_BAR else { return }
+                        let strings = nodes.map { text.string($0.text) }
+                        for expected in present {
+                            XCTAssertTrue(strings.contains { $0.contains(expected) }, "\(style) \(flags) \(strings)")
+                        }
+                        for unexpected in absent {
+                            XCTAssertFalse(strings.contains(unexpected), "\(style) \(flags) \(strings)")
+                        }
+                        if flags.contains(where: { $0.0 == "artist" }) {
+                            XCTAssertTrue(strings.contains { $0.hasPrefix("Song — Artist") }, "\(style) \(strings)")
+                        }
+                    }
+                )
+            }
+        }
+    }
+
+    func testMediaPopoutShowsTheOutputVolume() throws {
+        let data = try fullData()
+        for style in ["default", "celestial"] {
+            var popouts = 0
+            try renderStyle(style, widget: "media", data: data, inspect: { view, nodes, text in
+                guard view == OMNI_VIEW_POPOUT else { return }
+                popouts += 1
+                let strings = nodes.map { text.string($0.text) }
+                XCTAssertTrue(
+                    strings.contains { $0.hasPrefix("40") && $0.hasSuffix("%") },
+                    "\(style) \(strings.filter { $0.count < 40 })"
+                )
+            })
+            XCTAssertGreaterThan(popouts, 0, style)
+        }
+    }
+
     func testDefaultPopoutsUseOneNativeGlassSurfaceWithFullAndMissingData() throws {
         let full = try fullData { $0.style.height = 32 }
         let variants = [full, full.filter { (Self.essentials + ["hiddenBar"]).contains($0.0) }]

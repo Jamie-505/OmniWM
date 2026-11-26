@@ -3,9 +3,10 @@
 
 local look = require("../lib/look")
 local media = require("../lib/media")
+local audio = require("../lib/audio")
 
 function render(ctx)
-    local m = media.state(ctx)
+    local m = media.bar(ctx)
     if not m then
         return ui.box{ w = 0, h = 0 }
     end
@@ -16,7 +17,13 @@ function render(ctx)
         local props = table.clone(behaviour)
         props[1] = look.barGlyph(ctx, { name = m.symbol, size = 14 * scale })
         if not ctx.data.bar.style.vertical then
-            props[2] = look.text{ text = m.title, size = 13 * scale, maxWidth = 160 * scale }
+            if m.text ~= "" then
+                props[#props + 1] = look.text{ text = m.text, size = 13 * scale, maxWidth = m.maxWidth * scale }
+            end
+            if m.timeText then
+                props[#props + 1] = look.text{ text = m.timeText, style = "mono", size = 12 * scale,
+                    color = "secondaryForeground" }
+            end
         end
         button = look.bar(ctx, props)
     end
@@ -28,6 +35,9 @@ end
 
 function popout(ctx)
     local m = media.model(ctx)
+    if m then
+        m.audio = audio.state(ctx)
+    end
     return look.mediaPanel and look.mediaPanel(ctx, m)
         or look.panel(ctx, { w = look.width + 28, look.heading(omniwm.l10n("Media")), media.content(ctx, false, nil, m) })
 end

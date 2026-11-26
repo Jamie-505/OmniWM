@@ -18441,6 +18441,40 @@
         }
       }
     },
+    "Show album" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show album"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示专辑"
+          }
+        }
+      }
+    },
+    "Show artist" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show artist"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示艺人"
+          }
+        }
+      }
+    },
     "Show calendar icon" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -18471,6 +18505,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "显示日期"
+          }
+        }
+      }
+    },
+    "Show playback time" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show playback time"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示播放时间"
+          }
+        }
+      }
+    },
+    "Show title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show title"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示标题"
           }
         }
       }

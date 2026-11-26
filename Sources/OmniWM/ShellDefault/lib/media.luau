@@ -32,6 +32,47 @@ function media.state(ctx)
         help = if artist and artist ~= "" then title .. " — " .. artist else title }
 end
 
+function media.bar(ctx)
+    local m = media.state(ctx)
+    if not m then
+        return nil
+    end
+    local settings = ctx.data.settings or {}
+    local parts = {}
+    if settings.title ~= false then
+        parts[#parts + 1] = m.title
+    end
+    if settings.artist == true and m.artist and m.artist ~= "" then
+        parts[#parts + 1] = m.artist
+    end
+    if settings.album == true then
+        local album = ctx.select("media", "album")
+        if album and album ~= "" then
+            parts[#parts + 1] = album
+        end
+    end
+    m.text = table.concat(parts, " — ")
+    m.maxWidth = tonumber(settings.maxWidth) or 160
+    if settings.time == true then
+        local elapsed = ctx.select("media", "elapsed")
+        if elapsed ~= nil then
+            local duration = ctx.select("media", "duration")
+            local position = elapsed
+            if m.playing then
+                position += math.max(0, ctx.data.seconds - ctx.select("media", "sampledAt"))
+                    * ctx.select("media", "rate")
+            end
+            if duration and duration > 0 then
+                m.timeText = clock(math.min(position, duration)) .. " / " .. clock(duration)
+            else
+                m.timeText = clock(position)
+            end
+        end
+    end
+    m.label = if m.timeText and m.text ~= "" then m.text .. "  " .. m.timeText else m.timeText or m.text
+    return m
+end
+
 local function lyrics(ctx, position: number)
     local data = ctx.data.lyrics
     if not data then
@@ -173,6 +214,15 @@ function media.content(ctx, compact: boolean?, width: number?, m)
     controls[#controls + 1] = ui.box{ grow = 1 }
     controls[#controls + 1] = look.button("arrow.up.forward.app", m.open)
     rows[#rows + 1] = ui.row(controls)
+    local volume = m.audio
+    if volume and volume.volume then
+        rows[#rows + 1] = ui.row{ w = inner, gap = 8,
+            look.glyph{ name = volume.symbol, w = 18, h = 18 },
+            ui.slider{ value = volume.level, w = inner - 112, h = 16,
+                color = if volume.muted then "mutedForeground" else "accent", onChange = volume.set },
+            look.text{ text = volume.percent, size = 12, w = 42, reserve = ctx.format.percent(1) },
+            look.button(volume.muteSymbol, volume.mute) }
+    end
     local content = look.group(rows)
     local lyric = not compact and lyricRows(m, width, inner)
     if not lyric then

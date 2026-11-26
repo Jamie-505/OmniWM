@@ -443,7 +443,7 @@ local function mediaBar(ctx, m)
     end
     item.h = size
     item[1], item[2] = ui.box{ w = 0, h = 1 }, disc
-    item[3] = ui.text{ text = m.title, size = 14 * scale, weight = "medium", maxWidth = 130 }
+    item[3] = ui.text{ text = m.label or m.title, size = 14 * scale, weight = "medium", maxWidth = m.maxWidth or 130 }
     item[4] = ui.box{ w = 3, h = 1 }
     return ui.row(item)
 end

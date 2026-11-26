@@ -1041,8 +1041,8 @@ return require("./skin")({
         end
         props.h = size
         props[#props + 1] = ui.box{ w = 8, h = 1 }
-        props[#props + 1] = ui.text{ text = m.title, size = 14 * scale, weight = "semibold",
-            color = style.textColor ~= nil and "foreground" or "blue", maxWidth = 150 }
+        props[#props + 1] = ui.text{ text = m.label or m.title, size = 14 * scale, weight = "semibold",
+            color = style.textColor ~= nil and "foreground" or "blue", maxWidth = m.maxWidth or 150 }
         props[#props + 1] = ui.box{ w = 9, h = 1 }
         return ui.row(props)
     end,

@@ -105,6 +105,7 @@ end
 
 local function details(media)
     local width = DETAILS
+    local volume = media.audio
     local function line(text: string, size: number, color: string)
         return ui.text{ text = text, font = "Google Sans Flex", size = size, color = color, maxWidth = width }
     end
@@ -133,7 +134,15 @@ local function details(media)
                 glyph = tokens.icon.large }),
             surface.button("skip_next", "tonal", { onClick = media.next, glyph = tokens.icon.large }),
             media.repeatMode ~= nil and toggle(media.repeatMode == "one" and "repeat_one" or "repeat", media.repeating,
-                media.repeatCommand) or nil } }
+                media.repeatCommand) or nil },
+        volume and volume.volume and ui.box{ w = 1, h = tokens.spacing.small } or nil,
+        volume and volume.volume and ui.row{ w = width, gap = tokens.spacing.small,
+            surface.button(volume.muted and "no_sound" or "volume_up", "tonal", { onClick = volume.mute,
+                glyph = tokens.icon.small }),
+            ui.slider{ value = volume.level, grow = 1, h = 16, color = volume.muted and "mutedForeground" or "accent",
+                onChange = volume.set },
+            ui.text{ text = volume.percent, font = "Google Sans Flex", size = tokens.label.medium,
+                color = "secondaryForeground", reserve = "100%" } } or nil }
 end
 
 local function state(icon: string, text: string, tint: string)

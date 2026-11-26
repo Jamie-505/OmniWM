@@ -613,8 +613,15 @@ return require("./skin")({
         local items = { surface.icon(if m.playing then "music_note" else "pause", { color = "secondaryAccent",
             size = tokens.icon.medium * scale, filled = true, animate = "effects" }) }
         if not style.vertical then
-            items[2] = ui.text{ text = m.title, font = "Google Sans Flex", size = tokens.label.large * scale, weight = "medium",
-                maxWidth = 160 }
+            local text = m.text or m.title
+            if text ~= "" then
+                items[#items + 1] = ui.text{ text = text, font = "Google Sans Flex", size = tokens.label.large * scale,
+                    weight = "medium", maxWidth = m.maxWidth or 160 }
+            end
+            if m.timeText then
+                items[#items + 1] = ui.text{ text = m.timeText, font = "Google Sans Flex",
+                    size = tokens.label.medium * scale, color = "secondaryForeground" }
+            end
         end
         return surface.pill(style, items, { hover = status.hover })
     end,
